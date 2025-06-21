@@ -29,20 +29,25 @@ namespace Domain.Generics.Persistance
 
         public async Task<Model> GetByIdAsync(Guid? id)
         {
-            return await dbSet.Where(entity => entity.Id == id).SingleAsync();
+            return await dbSet.Where(entity => entity.Id == id).SingleOrDefaultAsync();
         }
 
         public async Task CreateAsync(Model model)
         {
             if (model != null)
+            {
+                model.CreatedOn = DateTime.Now;
                 _context.Add(model);
-
+            }
+               
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Model model)
         {
-           _context.Update(model);
+            _context.ChangeTracker.Clear();
+            model.UpdatedOn = DateTime.Now;
+            _context.Update(model);
             await _context.SaveChangesAsync();
         }
 
