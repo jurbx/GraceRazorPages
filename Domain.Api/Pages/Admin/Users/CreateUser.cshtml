@@ -1,7 +1,7 @@
 ﻿@page
 @model Domain.Api.Pages.Admin.Users.CreateUserModel
 @{
-    Layout = "~/Pages/Shared/AdminLayout.cshtml";
+    Layout = "~/Pages/Admin/AdminLayout.cshtml";
 }
 
 
@@ -44,6 +44,13 @@
                             <div class="form-group">
                                 <label for="inputName">Name</label>
                                 <input type="text" id="inputName" class="form-control" asp-for="User!.Name">
+                                <label for="inputName">Lastname</label>
+                                <input type="text" id="inputLastname" class="form-control" asp-for="User!.Lastname">
+                                <label for="inputName">Email</label>
+                                <input type="text" id="inputLastname" class="form-control" asp-for="User!.Email">
+                                <label for="inputName">Password</label>
+                                <input type="text" id="inputLastname" class="form-control" asp-for="User!.PasswordHash">
+
                                 <input type="hidden" id="inputId" asp-for="User!.Id">
                             </div>
                         </div>
@@ -54,7 +61,7 @@
                 <div class="col-md-6">
                     <div class="card card-secondary">
                         <div class="card-header">
-                            <h3 class="card-title">Budget</h3>
+                            <h3 class="card-title">Other</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -64,8 +71,11 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="inputName">Lastname</label>
-                                <input type="text" id="inputLastname" class="form-control" asp-for="User!.Lastname">
+                                <label for="inputName">Role</label>
+                                <select asp-for="User.Role">
+                                    <option value="0">None</option>
+                                    <option value="1">Administrator</option>
+                                </select>
                             </div>
                         </div>
                         <!-- /.card-body -->

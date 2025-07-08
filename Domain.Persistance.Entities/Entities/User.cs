@@ -1,4 +1,5 @@
-﻿using Domain.Generics.Persistance;
+﻿using Domain.Generics.Enums;
+using Domain.Generics.Persistance;
 
 namespace Domain.Persistance.Entities
 {
@@ -6,5 +7,9 @@ namespace Domain.Persistance.Entities
     {
         public string? Name { get; set; }
         public string? Lastname { get; set; }
+        public string? Email { get; set; }
+        public string? PasswordHash { get; set; }
+        public UserRole? Role { get; set; }
+
     }
 }

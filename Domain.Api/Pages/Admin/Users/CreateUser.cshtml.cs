@@ -3,6 +3,8 @@ using Domain.Services.Contracts.Services;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Domain.Api.Pages.Admin.Users
 {
@@ -35,6 +37,11 @@ namespace Domain.Api.Pages.Admin.Users
             }
             else
             {
+                using (HashAlgorithm algorithm = SHA512.Create()) 
+                {
+                    user.PasswordHash = algorithm.ComputeHash(Encoding.UTF8.GetBytes(User.PasswordHash)).ToString();
+                }
+
                 await userService.CreateAsync(user);
             }
 
