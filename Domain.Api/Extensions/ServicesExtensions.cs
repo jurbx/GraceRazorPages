@@ -7,7 +7,8 @@ namespace Domain.Api.Extensions
     {
         public static IServiceCollection ConfigureDomainServices(this IServiceCollection services)
         {
-            services.AddSingleton<ProgramDbContext>();
+            services.AddDbContextFactory<ProgramDbContext>();
+            services.AddScoped<ProgramDbContext>();
             services.ConfigureRepositories();
             services.ConfigureServices();
 

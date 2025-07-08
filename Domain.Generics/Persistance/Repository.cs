@@ -2,9 +2,11 @@
 
 namespace Domain.Generics.Persistance
 {
-    public class Repository<Model> : IRepository<Model> where Model : Entity
+    public class Repository<Model, IDbContext> : IRepository<Model> where Model : Entity where IDbContext : DbContext
     {
         readonly DbContext _context;
+        readonly IDbContextFactory<IDbContext> _dbContextFactory;
+
         private DbSet<Model> theDbSet;
         protected DbSet<Model> dbSet
         {
@@ -17,9 +19,10 @@ namespace Domain.Generics.Persistance
             }
         }
 
-        public Repository(DbContext context)
+        public Repository(IDbContextFactory<IDbContext> dbContextFactory)
         {
-            _context = context;
+            _dbContextFactory = dbContextFactory;
+            _context = dbContextFactory.CreateDbContext();
         }
 
         public async Task<List<Model>> GetAllAsync()
@@ -53,9 +56,13 @@ namespace Domain.Generics.Persistance
 
         public async Task DeleteAsync(Guid? id)
         {
-            var entity = await GetByIdAsync(id);
-            _context.Remove(entity);
-            await _context.SaveChangesAsync();
+            using (var ctx = _dbContextFactory.CreateDbContext())
+            {
+                var _dbSet = ctx.Set<Model>();
+                var entity = _dbSet.Where(model => model.Id == id).First();
+                ctx.Remove(entity);
+                await ctx.SaveChangesAsync();
+            }
         }
     }
 }

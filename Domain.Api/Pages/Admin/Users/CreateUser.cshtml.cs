@@ -38,7 +38,7 @@ namespace Domain.Api.Pages.Admin.Users
                 await userService.CreateAsync(user);
             }
 
-            return Redirect("/Admin/Users/UserList");
+            return Redirect("/Admin/Users/UsersList");
         }
     }
 }
