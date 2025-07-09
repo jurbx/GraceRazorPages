@@ -10,27 +10,27 @@ namespace Domain.Generics.Services
             this.repository = repository;
         }
 
-        public async Task<List<Model>> GetAllAsync()
+        public virtual async Task<List<Model>> GetAllAsync()
         {
             return await repository.GetAllAsync();
         }
 
-        public async Task<Model> GetByIdAsync(Guid? id)
+        public virtual async Task<Model> GetByIdAsync(Guid? id)
         {
             return await repository.GetByIdAsync(id);
         }
 
-        public async Task CreateAsync(Model model)
+        public virtual async Task CreateAsync(Model model)
         {
             await repository.CreateAsync(model);
         }
 
-        public async Task UpdateAsync(Model model)
+        public virtual async Task UpdateAsync(Model model)
         {
             await repository.UpdateAsync(model);
         }
 
-        public async Task DeleteAsync(Guid? id)
+        public virtual async Task DeleteAsync(Guid? id)
         {
             await repository.DeleteAsync(id);
         }

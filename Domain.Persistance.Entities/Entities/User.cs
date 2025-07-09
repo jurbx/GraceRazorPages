@@ -1,7 +1,7 @@
 ﻿using Domain.Generics.Enums;
 using Domain.Generics.Persistance;
 
-namespace Domain.Persistance.Entities
+namespace Domain.Persistance.Entities.Entities
 {
     public class User : Entity
     {

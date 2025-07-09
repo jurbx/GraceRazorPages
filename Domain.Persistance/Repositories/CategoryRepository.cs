@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Persistance.Repositories
 {
-    public class UserRepository : Repository<User, ProgramDbContext>, IUserRepository
+    public class CategoryRepository : Repository<Category, ProgramDbContext>, ICategoryRepository
     {
-        public UserRepository(IDbContextFactory<ProgramDbContext> dbContextFactory) : base(dbContextFactory)
+        public CategoryRepository(IDbContextFactory<ProgramDbContext> dbContextFactory) : base(dbContextFactory)
         {
         }
     }

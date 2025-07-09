@@ -3,7 +3,7 @@ using Domain.Services;
 
 namespace Domain.Api.Extensions
 {
-    public static class ServicesExtensions
+    public static class Extensions
     {
         public static IServiceCollection ConfigureDomainServices(this IServiceCollection services)
         {

@@ -1,6 +1,5 @@
 using Domain.Services.Contracts.Services;
-using Domain.Persistance.Entities;
-using Microsoft.AspNetCore.Mvc;
+using Domain.Persistance.Entities.Entities;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Domain.Api.Pages.Admin.Users

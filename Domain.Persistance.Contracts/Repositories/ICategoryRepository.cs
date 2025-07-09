@@ -3,6 +3,7 @@ using Domain.Persistance.Entities.Entities;
 
 namespace Domain.Persistance.Contracts.Repositories
 {
-    public interface IUserRepository : IRepository<User>
-    { }
+    public interface ICategoryRepository : IRepository<Category>
+    {
+    }
 }

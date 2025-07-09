@@ -1,5 +1,5 @@
 ﻿using Domain.Generics.Services;
-using Domain.Persistance.Entities;
+using Domain.Persistance.Entities.Entities;
 
 namespace Domain.Services.Contracts.Services
 {
