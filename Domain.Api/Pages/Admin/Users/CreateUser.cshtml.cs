@@ -1,5 +1,6 @@
 using Domain.Persistance.Entities.Entities;
 using Domain.Services.Contracts.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.AspNetCore.Mvc.RazorPages;

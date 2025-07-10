@@ -8,8 +8,13 @@ namespace Domain.Api
         {
             var builder = WebApplication.CreateBuilder(args);
             // Add services to the container.
-            builder.Services.AddRazorPages();
-            builder.Services.ConfigureDomainServices();
+
+            builder.Services.ConfigureDomainServices()
+                .ConfigureAuth()
+                .AddRazorPages(options =>
+            {
+                options.Conventions.AuthorizeFolder("/Admin", "Admin");
+            });
 
             var app = builder.Build();
 
@@ -26,8 +31,8 @@ namespace Domain.Api
 
             app.UseRouting();
 
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapRazorPages();
 

@@ -22,7 +22,7 @@ namespace Domain.Persistance.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Persistance.Entities.User", b =>
+            modelBuilder.Entity("Domain.Persistance.Entities.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,10 +35,8 @@ namespace Domain.Persistance.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lastname")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -54,7 +52,20 @@ namespace Domain.Persistance.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Email = "grace-testuser@gmail.com",
+                            Name = "AdminUser",
+                            PasswordHash = "�I�=��֑�wT����^�L��6��u�F�]��T�9�N��F��m��E���~��hj\0",
+                            Role = 1
+                        });
                 });
 #pragma warning restore 612, 618
         }

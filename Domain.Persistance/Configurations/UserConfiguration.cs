@@ -8,6 +8,8 @@ namespace Domain.Persistance.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.Property(user => user.Email).IsRequired();
+            builder.HasIndex(user => user.Email).IsUnique();
         }
     }
 }

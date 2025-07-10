@@ -1,27 +1,25 @@
-﻿using Domain.Generics.Services;
+﻿using Domain.Generics;
+using Domain.Generics.Services;
 using Domain.Persistance.Contracts.Repositories;
 using Domain.Persistance.Entities.Entities;
 using Domain.Services.Contracts.Services;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace Domain.Services.Services
 {
     public class UserService : Service<User>, IUserService
     {
-        public UserService(IUserRepository repository) : base(repository)
+        private readonly IUserRepository userRepository;
+
+        public UserService(IUserRepository userRepository) : base(userRepository)
         {
+            this.userRepository = userRepository;
         }
 
         public override Task CreateAsync(User user)
         {
             if (user.PasswordHash != null)
             {
-                using (HashAlgorithm algorithm = SHA512.Create())
-                {
-                    var passwordByte = algorithm.ComputeHash(Encoding.UTF8.GetBytes(user.PasswordHash));
-                    user.PasswordHash = Encoding.UTF8.GetString(passwordByte);
-                }
+                user.PasswordHash = user.PasswordHash.HashStringSHA512();
             }
             
 
@@ -31,10 +29,23 @@ namespace Domain.Services.Services
         public async override Task UpdateAsync(User user)
         {
             var dbUser = await repository.GetByIdAsync(user.Id);
+            if (dbUser == null) 
+            {
+                return;
+            }
+
+            user.CreatedOn = dbUser.CreatedOn;
+            user.UpdatedOn = DateTimeOffset.Now;
+
             if (user.PasswordHash != null)
                 user.PasswordHash = dbUser.PasswordHash;
 
             await repository.UpdateAsync(user);
+        }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            return await userRepository.GetUserByEmail(email);
         }
     }
 }

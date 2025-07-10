@@ -1,5 +1,7 @@
 ﻿using Domain.Persistance;
 using Domain.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
 namespace Domain.Api.Extensions
 {
@@ -13,6 +15,24 @@ namespace Domain.Api.Extensions
             services.ConfigureServices();
 
             return services;
-        } 
+        }
+
+        public static IServiceCollection ConfigureAuth(this IServiceCollection services)
+        {
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Auth/Login";
+                    options.AccessDeniedPath = "/";
+                });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "GraceSAllowAdmin"));
+            });
+
+            return services;
+        }
     }
 }

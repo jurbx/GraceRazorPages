@@ -10,5 +10,10 @@ namespace Domain.Persistance.Repositories
         public UserRepository(IDbContextFactory<ProgramDbContext> dbContextFactory) : base(dbContextFactory)
         {
         }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            return await dbSet.Where(model => model.Email == email).FirstOrDefaultAsync();
+        }
     }
 }
