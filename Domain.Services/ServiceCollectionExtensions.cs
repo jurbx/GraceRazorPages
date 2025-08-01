@@ -9,6 +9,7 @@ namespace Domain.Services
         public static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IHomeSlideService, HomeSlideService>();
 
             return services;
         }

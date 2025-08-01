@@ -9,6 +9,7 @@ namespace Domain.Persistance
         public static IServiceCollection ConfigureRepositories(this IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IHomeSlideRepository, HomeSlideRepository>();
 
             return services;
         }
