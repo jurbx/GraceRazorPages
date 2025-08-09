@@ -1,20 +1,16 @@
-using Domain.Persistance.Entities.Entities;
 using Domain.Services.Contracts.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security.Cryptography;
-using System.Text;
 
-namespace Domain.Api.Pages.Admin.Users
+namespace Domain.Api.Pages.Admin.User
 {
     public class CreateUserModel : PageModel
     {
         private readonly IUserService userService;
 
         [BindProperty]
-        public User User { get; set; }
+        public Persistance.Entities.Entities.User User { get; set; }
 
         public CreateUserModel(IUserService userService)
         {
@@ -30,7 +26,7 @@ namespace Domain.Api.Pages.Admin.Users
             }
         }
 
-        public async Task<IActionResult> OnPostAsync(User user)
+        public async Task<IActionResult> OnPostAsync(Persistance.Entities.Entities.User user)
         {
             if (User?.Id != null)
             {

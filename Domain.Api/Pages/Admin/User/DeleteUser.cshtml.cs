@@ -3,7 +3,7 @@ using Domain.Services.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Domain.Api.Pages.Admin.Users
+namespace Domain.Api.Pages.Admin.User
 {
     public class DeleteUser : PageModel
     {

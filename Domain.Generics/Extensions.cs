@@ -12,7 +12,7 @@ namespace Domain.Generics
             using (HashAlgorithm algorithm = SHA512.Create())
             {
                 var stringByte = algorithm.ComputeHash(Encoding.UTF8.GetBytes(text));
-                hash = Encoding.UTF8.GetString(stringByte);
+                hash = BitConverter.ToString(stringByte).Replace("-", "").ToLower();
             }
 
             return hash;

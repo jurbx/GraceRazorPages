@@ -1,0 +1,103 @@
+﻿@model (IEnumerable<object> Items, IEnumerable<string> IncludedProperties)
+
+@{
+    var items = Model.Items;
+    if (!items?.Any() ?? true)
+    {
+        <p>No items to display.</p>
+        return;
+    }
+    Layout = "~/Pages/Admin/AdminLayout.cshtml";
+
+    var type = Model.Items.First().GetType();
+    var properties = type.GetProperties().Where(info => Model.IncludedProperties.Contains(info.Name));
+    var url = $"/Admin/{type.Name}";
+}
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>@type.Name</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">@type.Name</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">@nameof(type)</h3>
+
+                <div class="card-tools">
+                    <a class="btn btn-info btn-sm" href=@(url + "/Create" + type.Name)>
+                        <i class="fas fa-plus">
+                        </i>
+                        Create
+                    </a>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped projects">
+                    <thead>
+                        <tr>
+
+                            @foreach (var info in properties)
+                            {
+                                <th style="width: @(1.0 / properties.Count() * 100)">
+                                    @info.Name
+                                </th>
+                            }
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var entity in Model.Items)
+                        {
+                            <tr>
+                                @foreach (var info in properties)
+                                {
+                                    <td>
+                                        <a>
+                                            @info.GetValue(entity)
+                                        </a>
+                                        <br />
+                                    </td>
+                                }
+                                <td class="project-actions text-right">
+                                    <a class="btn btn-info btn-sm" href="@(url + "/Create" + type.Name)?id=@properties.First(x => x.Name == "Id").GetValue(entity)">
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                        Edit
+                                    </a>
+                                    <a class="btn btn-danger btn-sm" href="@(url + "/Delete" + type.Name)?id=@properties.First(x => x.Name == "Id").GetValue(entity)">
+                                        <i class="fas fa-trash">
+                                        </i>
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+</div>

@@ -2,9 +2,6 @@
 using Domain.Persistance.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using static System.Net.Mime.MediaTypeNames;
-using System.Security.Cryptography;
-using System.Text;
 using Domain.Generics;
 
 namespace Domain.Persistance
@@ -31,17 +28,19 @@ namespace Domain.Persistance
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(Config.GetConnectionString("DatabaseConntection"));
+            optionsBuilder.UseNpgsql(Config.GetConnectionString("DatabaseConntection"));
         }
 
         private void CreateDefaultUser(ModelBuilder modelBuilder)
         {
+            var passwort = "testpassword123".HashStringSHA512();
+
             modelBuilder.Entity<User>().HasData(new User
             {
                 Id = Guid.Empty,
                 Email = "grace-testuser@gmail.com",
                 Name = "AdminUser",
-                PasswordHash = "testpassword123".HashStringSHA512(),
+                PasswordHash = passwort,
                 Role = Generics.Enums.UserRole.Admin,
             });
         }
