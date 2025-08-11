@@ -1,5 +1,0 @@
-﻿
-
-namespace Domain.Generics.Pages
-{
-}

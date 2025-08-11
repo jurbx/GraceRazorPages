@@ -1,19 +1,20 @@
+using Domain.Api.Pages.Admin.Shared;
 using Domain.Services.Contracts.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Domain.Api.Pages.Admin.User
 {
-    public class DeleteUser : PageModel
+    public class DeleteUser : BaseDeleteModel<Persistance.Entities.Entities.User>
     {
         private readonly IUserService userService;
 
-        public DeleteUser(IUserService userService)
+        public DeleteUser(IUserService userService) : base(userService)
         {
             this.userService = userService;
         }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        public override async Task<IActionResult> OnGetAsync(Guid? id)
         {
             var user = await userService.GetByIdAsync(id);
 

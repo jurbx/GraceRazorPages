@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Domain.Api.Pages.Admin.Shared
 {
-    public class CreatePageModel<IEntity> : PageModel where IEntity : Entity
+    public class BaseCreateModel<IEntity> : PageModel where IEntity : Entity
     {
         protected readonly IService<IEntity> service;
 
-        public required object _Entity = new Entity();
+        public required object _Entity = Activator.CreateInstance(typeof(IEntity));
         public IEnumerable<string> ExcludedProperties { get; set; } = new List<string>
         {
             nameof(Entity.Id),
@@ -18,7 +18,7 @@ namespace Domain.Api.Pages.Admin.Shared
             nameof(Entity.DeletedOn)
         };
 
-        public CreatePageModel(IService<IEntity> service)
+        public BaseCreateModel(IService<IEntity> service)
         {
             this.service = service;
         }

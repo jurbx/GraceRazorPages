@@ -2,14 +2,9 @@
 
 @{
     var items = Model.Items;
-    if (!items?.Any() ?? true)
-    {
-        <p>No items to display.</p>
-        return;
-    }
-    Layout = "/Pages/Admin/Shared/AdminLayout.cshtml";
+    Layout = "~/Pages/Admin/Shared/AdminLayout.cshtml";
 
-    var type = Model.Items.First().GetType();
+    var type = Model.Items.FirstOrDefault()?.GetType() ?? Model.Items.GetType().GetGenericArguments()[0];
     var properties = type.GetProperties().Where(info => Model.IncludedProperties.Contains(info.Name));
     var url = $"/Admin/{type.Name}";
 }

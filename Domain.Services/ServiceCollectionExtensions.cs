@@ -10,6 +10,7 @@ namespace Domain.Services
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IHomeSlideService, HomeSlideService>();
+            services.AddScoped<ICategoryService, CategoryService>();
 
             return services;
         }

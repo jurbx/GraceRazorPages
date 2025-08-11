@@ -10,6 +10,7 @@ namespace Domain.Persistance
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IHomeSlideRepository, HomeSlideRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             return services;
         }

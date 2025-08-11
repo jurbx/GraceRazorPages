@@ -1,21 +1,18 @@
-using Domain.Persistance.Contracts.Repositories;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Domain.Api.Pages.Admin.Shared;
+using Domain.Services.Contracts.Services;
 
 namespace Domain.Api.Pages.Admin.HomeSlide
 {
-    public class HomeSlideListModel : PageModel
+    public class HomeSlideListModel : BaseListModel<Persistance.Entities.Entities.HomeSlide>
     {
-        private readonly IHomeSlideRepository homeSlideRepository;
-
-        public IEnumerable<Persistance.Entities.Entities.HomeSlide> HomeSlides { get; set; }
-        public HomeSlideListModel(IHomeSlideRepository homeSlideRepository) 
+        public HomeSlideListModel(IHomeSlideService service) : base(service)
         {
-            this.homeSlideRepository = homeSlideRepository;
-        }
-
-        public async Task OnGetAsync()
-        {
-            HomeSlides = await homeSlideRepository.GetAllAsync();
+            IncludedProperties = new List<string>
+            {
+                nameof(Persistance.Entities.Entities.HomeSlide.Title),
+                nameof(Persistance.Entities.Entities.HomeSlide.Description),
+                nameof(Persistance.Entities.Entities.HomeSlide.ImgPath),
+            };
         }
     }
 }
