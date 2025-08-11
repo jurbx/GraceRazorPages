@@ -3,6 +3,7 @@ using System;
 using Domain.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Domain.Persistance.Migrations
 {
     [DbContext(typeof(ProgramDbContext))]
-    partial class ProgramDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250809181515_Chance-Columnname-And-Type")]
+    partial class ChanceColumnnameAndType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,10 +32,10 @@ namespace Domain.Persistance.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -44,7 +47,7 @@ namespace Domain.Persistance.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -58,10 +61,10 @@ namespace Domain.Persistance.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -73,13 +76,11 @@ namespace Domain.Persistance.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
-                    b.Property<int>("Role")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(0);
+                    b.Property<int?>("Role")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -94,7 +95,7 @@ namespace Domain.Persistance.Migrations
                             Id = new Guid("00000000-0000-0000-0000-000000000000"),
                             Email = "grace-testuser@gmail.com",
                             Name = "AdminUser",
-                            Password = "110f0dd59c92d2487a30958d9f804477dc9a8814f2848d613a88d79b956f1229f97480067786e5e034ac51822c152eeb70f3c0844db5d6313c408c33a2849321",
+                            Password = "1b08d60549c43d8ad3151fd69113f57754bbfbfff75e1bc54c829e36e2fb7514d61646be5da1f154ba39dd4edaeb46bdaf6defd21f45fa90ca7edaf0681a6a00",
                             Role = 1
                         });
                 });

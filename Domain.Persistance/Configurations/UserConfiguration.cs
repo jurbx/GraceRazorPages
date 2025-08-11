@@ -1,4 +1,5 @@
-﻿using Domain.Persistance.Entities.Entities;
+﻿using Domain.Generics.Enums;
+using Domain.Persistance.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,6 +11,8 @@ namespace Domain.Persistance.Configurations
         {
             builder.Property(user => user.Email).IsRequired();
             builder.HasIndex(user => user.Email).IsUnique();
+
+            builder.Property(user => user.Role).HasDefaultValue(UserRole.None);
         }
     }
 }

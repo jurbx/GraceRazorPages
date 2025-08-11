@@ -33,14 +33,14 @@ namespace Domain.Persistance
 
         private void CreateDefaultUser(ModelBuilder modelBuilder)
         {
-            var passwort = "testpassword123".HashStringSHA512();
+            var passwort = "testpassword1234".HashStringSHA512();
 
             modelBuilder.Entity<User>().HasData(new User
             {
                 Id = Guid.Empty,
                 Email = "grace-testuser@gmail.com",
                 Name = "AdminUser",
-                PasswordHash = passwort,
+                Password = passwort,
                 Role = Generics.Enums.UserRole.Admin,
             });
         }

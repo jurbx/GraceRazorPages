@@ -30,7 +30,7 @@ namespace Domain.Api.Pages.Auth
                 var user = await userService.GetUserByEmail(Email);
                 var hashedPassword = Password.HashStringSHA512();
 
-                if (user?.PasswordHash == hashedPassword)
+                if (user?.Password == hashedPassword)
                 {
                     var claims = new List<Claim>
                     {

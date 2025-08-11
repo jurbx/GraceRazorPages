@@ -13,6 +13,7 @@ namespace Domain.Api.Extensions
             services.AddScoped<ProgramDbContext>();
             services.ConfigureRepositories();
             services.ConfigureServices();
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
             return services;
         }

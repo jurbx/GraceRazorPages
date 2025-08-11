@@ -1,4 +1,5 @@
 ﻿using Domain.Generics;
+using Domain.Generics.Enums;
 using Domain.Generics.Services;
 using Domain.Persistance.Contracts.Repositories;
 using Domain.Persistance.Entities.Entities;
@@ -17,9 +18,9 @@ namespace Domain.Services.Services
 
         public override Task CreateAsync(User user)
         {
-            if (user.PasswordHash != null)
+            if (user.Password != null)
             {
-                user.PasswordHash = user.PasswordHash.HashStringSHA512();
+                user.Password = user.Password.HashStringSHA512();
             }
             
 
@@ -35,10 +36,10 @@ namespace Domain.Services.Services
             }
 
             user.CreatedOn = dbUser.CreatedOn;
-            user.UpdatedOn = DateTimeOffset.Now;
+            user.UpdatedOn = DateTime.Now;
 
-            if (user.PasswordHash != null)
-                user.PasswordHash = dbUser.PasswordHash;
+            if (user.Password != null)
+                user.Password = dbUser.Password;
 
             await repository.UpdateAsync(user);
         }
@@ -46,6 +47,11 @@ namespace Domain.Services.Services
         public async Task<User> GetUserByEmail(string email)
         {
             return await userRepository.GetUserByEmail(email);
+        }
+
+        public async Task<int> GetCountAsync(UserRole userRole)
+        {
+            return await userRepository.GetCountAsync(userRole);
         }
     }
 }

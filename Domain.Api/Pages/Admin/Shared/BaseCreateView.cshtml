@@ -2,7 +2,7 @@
 
 @model (object Item, IEnumerable<string> ExcludedProperties)
 @{
-    Layout = "~/Pages/Admin/AdminLayout.cshtml";
+    Layout = "~/Pages/Admin/Shared/AdminLayout.cshtml";
 
     var type = Model.Item.GetType();
     var properties = type.GetProperties().Where(p => !Model.ExcludedProperties.Contains(p.Name));
@@ -19,7 +19,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Project Add</li>
+                        <li class="breadcrumb-item active">@type.Name Add</li>
                     </ol>
                 </div>
             </div>
@@ -31,7 +31,7 @@
         <form method="post">
             <div class="row">
 
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">General</h3>
@@ -53,11 +53,11 @@
 
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for="inputName">@prop.Name</label>
-                                            <select asp-for="@prop.Name">
+                                            <label>@prop.Name</label>
+                                            <select name ="@prop.Name">
                                                 @foreach (var ev in enumValues)
                                                 {
-                                                    <option value="@ev">@ev.ToString()</option>
+                                                    <option value="@((int)ev)">@ev.ToString()</option>
                                                 }
                                             </select>
                                         </div>
@@ -67,8 +67,8 @@
                                 else
                                 {
                                     <div class="form-group">
-                                        <label asp-for="@prop.Name">@prop.Name</label>
-                                        <input id="inputName" class="form-control" name="@prop.Name">
+                                        <label>@prop.Name</label>
+                                        <input id="inputName" class="form-control" name="@prop.Name" value="@prop.GetValue(Model.Item)">
                                     </div>
                                 }
                             }
@@ -82,7 +82,7 @@
 
             <div class="row">
                 <div class="col-12">
-                    <a href="/Admin/Users/UsersList" class="btn btn-secondary">Cancel</a>
+                    <a href="/Admin/@type.Name/@(type.Name)List" class="btn btn-secondary">Cancel</a>
                     <input type="submit" value="Create" class="btn btn-success float-right">
                 </div>
             </div>
