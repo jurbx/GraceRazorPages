@@ -2,10 +2,10 @@
 
 namespace Domain.Persistance.Entities.Entities
 {
-    public class Category : Entity
+    public class Category : ImgEntity
     {
         public string? CategoryName { get; set; }
-        public byte[]? CategoryImage { get; set; }
+        public string? Description { get; set; }
 
     }
 }

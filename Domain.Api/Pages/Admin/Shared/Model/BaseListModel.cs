@@ -2,7 +2,7 @@
 using Domain.Generics.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Domain.Api.Pages.Admin.Shared
+namespace Domain.Api.Pages.Admin.Shared.Model
 {
     public class BaseListModel<IEntity> : PageModel where IEntity : Entity
     {

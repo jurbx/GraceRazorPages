@@ -1,4 +1,5 @@
 ﻿@using System.Reflection
+@using Domain.Services.Services
 
 @model (object Item, IEnumerable<string> ExcludedProperties)
 @{
@@ -6,6 +7,7 @@
 
     var type = Model.Item.GetType();
     var properties = type.GetProperties().Where(p => !Model.ExcludedProperties.Contains(p.Name));
+    var s3Service = new S3BucketService();
 }
 
 <div class="content-wrapper">
@@ -28,7 +30,7 @@
 
     <!-- Main content -->
     <section class="content">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div class="row">
 
                 <div class="col-md-12">
@@ -63,7 +65,13 @@
                                         </div>
                                     </div>
                                 }
-
+                                else if (prop.Name == "ImgName")
+                                {
+                                    <label for="formFile">Current File: @prop.GetValue(Model.Item)</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="formFile" value="FormFile">
+                                    </div>
+                                }
                                 else
                                 {
                                     <div class="form-group">

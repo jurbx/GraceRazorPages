@@ -12,6 +12,9 @@ namespace Domain.Services
             services.AddScoped<IHomeSlideService, HomeSlideService>();
             services.AddScoped<ICategoryService, CategoryService>();
 
+
+            services.AddScoped<IS3BucketService, S3BucketService>();
+
             return services;
         }
     }

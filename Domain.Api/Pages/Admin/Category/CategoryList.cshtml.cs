@@ -1,4 +1,4 @@
-using Domain.Api.Pages.Admin.Shared;
+using Domain.Api.Pages.Admin.Shared.Model;
 using Domain.Services.Contracts.Services;
 
 namespace Domain.Api.Pages.Admin.Category
@@ -10,7 +10,6 @@ namespace Domain.Api.Pages.Admin.Category
             IncludedProperties = new List<string>
             {
                 nameof(Persistance.Entities.Entities.Category.CategoryName),
-                nameof(Persistance.Entities.Entities.Category.CategoryImage),
             };
         }
     }

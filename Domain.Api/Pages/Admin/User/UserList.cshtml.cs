@@ -1,4 +1,4 @@
-using Domain.Api.Pages.Admin.Shared;
+using Domain.Api.Pages.Admin.Shared.Model;
 using Domain.Services.Contracts.Services;
 
 namespace Domain.Api.Pages.Admin.User

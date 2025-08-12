@@ -1,9 +1,10 @@
 ﻿using Domain.Generics.Persistance;
 using Domain.Generics.Services;
+using Domain.Services.Contracts.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Domain.Api.Pages.Admin.Shared
+namespace Domain.Api.Pages.Admin.Shared.Model
 {
     public class BaseCreateModel<IEntity> : PageModel where IEntity : Entity
     {
@@ -15,7 +16,6 @@ namespace Domain.Api.Pages.Admin.Shared
             nameof(Entity.Id),
             nameof(Entity.CreatedOn),
             nameof(Entity.UpdatedOn),
-            nameof(Entity.DeletedOn)
         };
 
         public BaseCreateModel(IService<IEntity> service)

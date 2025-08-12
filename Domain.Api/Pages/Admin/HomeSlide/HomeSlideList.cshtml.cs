@@ -1,4 +1,4 @@
-using Domain.Api.Pages.Admin.Shared;
+using Domain.Api.Pages.Admin.Shared.Model;
 using Domain.Services.Contracts.Services;
 
 namespace Domain.Api.Pages.Admin.HomeSlide
@@ -11,7 +11,6 @@ namespace Domain.Api.Pages.Admin.HomeSlide
             {
                 nameof(Persistance.Entities.Entities.HomeSlide.Title),
                 nameof(Persistance.Entities.Entities.HomeSlide.Description),
-                nameof(Persistance.Entities.Entities.HomeSlide.ImgPath),
             };
         }
     }

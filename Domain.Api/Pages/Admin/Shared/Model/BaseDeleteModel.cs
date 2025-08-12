@@ -3,7 +3,7 @@ using Domain.Generics.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Domain.Api.Pages.Admin.Shared
+namespace Domain.Api.Pages.Admin.Shared.Model
 {
     public class BaseDeleteModel<IEntity> : PageModel where IEntity : Entity
     {

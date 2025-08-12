@@ -40,7 +40,7 @@ namespace Domain.Api.Pages.Auth
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     await HttpContext.SignInAsync(new ClaimsPrincipal(identity));
 
-                    return Redirect("/Admin/Users/UsersList");
+                    return Redirect("/Admin/User/UserList");
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
