@@ -6,15 +6,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Domain.Api.Pages.Admin.Shared.Model
 {
-    public class BaseDeleteImgModel<IEntity> : PageModel where IEntity : ImgEntity
+    public class BaseDeleteImgModel<IEntity> : PageModel where IEntity : Entity
     {
         private readonly IService<IEntity> service;
         private readonly IS3BucketService s3BucketService;
+        private readonly IImageService imageService;
 
-        public BaseDeleteImgModel(IService<IEntity> service, IS3BucketService s3BucketService)
+        public BaseDeleteImgModel(
+            IService<IEntity> service, 
+            IS3BucketService s3BucketService,
+            IImageService imageService)
         {
             this.service = service;
             this.s3BucketService = s3BucketService;
+            this.imageService = imageService;
         }
 
         public virtual async Task<IActionResult> OnGetAsync(Guid? id)
@@ -23,9 +28,10 @@ namespace Domain.Api.Pages.Admin.Shared.Model
 
             if (entity != null)
             {
-                if (entity.ImgName != null)
+                var images = await imageService.GetByEntityIdAsync(entity.Id);
+                foreach (var image in images)
                 {
-                    await s3BucketService.DeleteFileAsync(entity.ImgName);
+                    await s3BucketService.DeleteFileAsync(image.ImagePath);
                 }
                 await service.DeleteAsync(id);
             }

@@ -9,6 +9,15 @@ namespace Domain.Api.Extensions
     {
         public static IServiceCollection ConfigureDomainServices(this IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "_myAllowSpecificOrigins",
+                                  policy =>
+                                  {
+                                      policy.WithOrigins("grace-furniture.s3-accelerate.amazonaws.com").AllowAnyMethod();
+                                  });
+            });
+
             services.AddDbContextFactory<ProgramDbContext>();
             services.AddScoped<ProgramDbContext>();
             services.ConfigureRepositories();
@@ -20,7 +29,6 @@ namespace Domain.Api.Extensions
 
         public static IServiceCollection ConfigureAuth(this IServiceCollection services)
         {
-
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {

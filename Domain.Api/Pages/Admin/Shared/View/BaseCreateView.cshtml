@@ -1,14 +1,23 @@
 ﻿@using System.Reflection
-@using Domain.Services.Services
+@using Domain.Api.Extensions
+@using Domain.Generics.Persistance
+@using Domain.Persistance.Entities.Entities
 
-@model (object Item, IEnumerable<string> ExcludedProperties)
 @{
     Layout = "~/Pages/Admin/Shared/AdminLayout.cshtml";
 
-    var type = Model.Item.GetType();
-    var properties = type.GetProperties().Where(p => !Model.ExcludedProperties.Contains(p.Name));
-    var s3Service = new S3BucketService();
+    var item = (Entity)ViewData["Entity"];
+    var excludedProperties = ViewData["ExcludedProperties"] as IEnumerable<string>;
+    var images = ViewData["Images"] as IEnumerable<Image>;
+
+    var type = item.GetType();
+    var properties = type.GetProperties().Where(p => !excludedProperties.Contains(p.Name));
 }
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AdminLTE 3 | Advanced form elements</title>
+
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -32,7 +41,6 @@
     <section class="content">
         <form method="post" enctype="multipart/form-data">
             <div class="row">
-
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
@@ -48,6 +56,7 @@
                             @foreach (var prop in properties)
                             {
                                 var actualType = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
+                                var propValue = prop.GetValue(item);
 
                                 @if (actualType.IsEnum)
                                 {
@@ -55,32 +64,46 @@
 
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label>@prop.Name</label>
-                                            <select name ="@prop.Name">
+                                            <label for="selectEnum">@prop.Name</label>
+                                            <select name="@prop.Name" class="custom-select rounded-0" id="selectEnum">
                                                 @foreach (var ev in enumValues)
                                                 {
-                                                    <option value="@((int)ev)">@ev.ToString()</option>
+                                                    @if (propValue?.ToString() == ev.ToString())
+                                                    {
+                                                        <option selected="selected" value="@((int)ev)">@ev.ToString()</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@((int)ev)">@ev.ToString()</option>
+                                                    }
+
                                                 }
                                             </select>
                                         </div>
                                     </div>
                                 }
-                                else if (prop.Name == "ImgName")
-                                {
-                                    <label for="formFile">Current File: @prop.GetValue(Model.Item)</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="formFile" value="FormFile">
-                                    </div>
-                                }
                                 else
                                 {
                                     <div class="form-group">
-                                        <label>@prop.Name</label>
-                                        <input id="inputName" class="form-control" name="@prop.Name" value="@prop.GetValue(Model.Item)">
+                                        <label for="@prop.Name">@prop.Name</label>
+                                        <input id="@prop.Name" class="form-control" name="@prop.Name" value="@propValue">
                                     </div>
                                 }
                             }
-                            
+
+
+
+
+
+                            @if (images != null)
+                            {
+                                @foreach (var img in images)
+                                {
+
+                                }
+                            }
+
+                            @RenderBody()
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -91,10 +114,54 @@
             <div class="row">
                 <div class="col-12">
                     <a href="/Admin/@type.Name/@(type.Name)List" class="btn btn-secondary">Cancel</a>
-                    <input type="submit" value="Create" class="btn btn-success float-right">
+                    <input type="submit" value="@(item.IsEmpty() ? "Create" : "Update")" class="btn btn-success float-right">
                 </div>
             </div>
         </form>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">Dropzone.js <small><em>jQuery File Upload</em> like look</small></h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="actions" class="row">
+                            <div class="col-lg-6">
+                                <div class="btn-group w-100">
+                                    <span class="btn btn-success col fileinput-button dz-clickable">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Add files</span>
+                                    </span>
+                                    <button type="submit" class="btn btn-primary col start">
+                                        <i class="fas fa-upload"></i>
+                                        <span>Start upload</span>
+                                    </button>
+                                    <button type="reset" class="btn btn-warning col cancel">
+                                        <i class="fas fa-times-circle"></i>
+                                        <span>Cancel upload</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-center">
+                                <div class="fileupload-process w-100">
+                                    <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="opacity: 0;">
+                                        <div class="progress-bar progress-bar-success" style="width: 100%;" data-dz-uploadprogress=""></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table table-striped files" id="previews">
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        Visit <a href="https://www.dropzonejs.com">dropzone.js documentation</a> for more examples and information about the plugin.
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
     </section>
     <!-- /.content -->
 </div>
+

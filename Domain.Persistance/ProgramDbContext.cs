@@ -18,10 +18,12 @@ namespace Domain.Persistance
         public DbSet<User> Users { get; set; }
         public DbSet<HomeSlide> HomeSlides { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new ImageConfiguration());
 
             CreateDefaultUser(modelBuilder);
         }

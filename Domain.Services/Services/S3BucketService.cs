@@ -14,7 +14,7 @@ namespace Domain.Services.Services
         string bucketName = "grace-furniture";
         RegionEndpoint region = RegionEndpoint.EUWest2;
 
-        public async Task<string> UploadFileAsync(IFormFile formFile, string? newFilename = null)
+        public async Task UploadFileAsync(IFormFile formFile, string? newFilename = null)
         {
             using (var client = new AmazonS3Client(keyId, secretKey, region))
             {
@@ -34,8 +34,6 @@ namespace Domain.Services.Services
                     await transferUtility.UploadAsync(request);
                 }
             }
-
-            return newFilename ?? formFile.FileName;
         }
 
         public async Task<Stream> GetByFilenameAsync(string fileName)

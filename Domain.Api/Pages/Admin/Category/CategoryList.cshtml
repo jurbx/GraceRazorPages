@@ -1,8 +1,8 @@
 ﻿@page
 @model Domain.Api.Pages.Admin.Category.CategoryList
 @{
-    Layout = null;
+    Layout = "Shared/View/BaseListView";
+    ViewData["Entities"] = Model.Entities;
+    ViewData["IncludedProperties"] = Model.IncludedProperties;
 }
-
-<partial name="Shared/View/BaseListView" model="(Model.Entities, Model.IncludedProperties)" />
 

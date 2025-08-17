@@ -30,6 +30,7 @@ namespace Domain.Api
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors("_myAllowSpecificOrigins");
 
             app.UseAuthentication();
             app.UseAuthorization();

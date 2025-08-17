@@ -1,4 +1,13 @@
 ﻿@using System.Security.Claims
+
+@{
+    var currentPath = Context.Request.Path.Value;
+    var activeTag = "active";
+    var topics = new List<string>
+    {
+        "User", "HomeSlide", "Category"
+    };
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,12 +16,13 @@
     <title>Grace-Furniture | Admin Panel</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="/admin/assets/css/all.min.css">
+    <link rel="stylesheet" href="/admin/assets/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="/admin/assets/css/adminlte.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" href="/admin/assets/plugins/dropzone/min/dropzone.min.css">
+    <link rel="stylesheet" href="/admin/assets/dist/css/adminlte.min.css">
+
 </head>
 <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -25,7 +35,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="../../index3.html" class="nav-link">Home</a>
+                    <a href="/Admin/User/UserList" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
@@ -67,28 +77,23 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                              with font-awesome or any other icon font library -->
-                        
-                        <li class="nav-header">Auth</li>
-                        <li class="nav-item">
-                            <a href="/Admin/User/UserList" class="nav-link">
-                                <i class="nav-icon far fa-image"></i>
-                                <p>
-                                    Users
-                                </p>
-                            </a>
-                            <a href="/Admin/HomeSlide/HomeSlideList" class="nav-link">
-                                <i class="nav-icon far fa-image"></i>
-                                <p>
-                                    Home Slides
-                                </p>
-                            </a>
-                            <a href="/Admin/Category/CategoryList" class="nav-link">
-                                <i class="nav-icon far fa-image"></i>
-                                <p>
-                                    Categories
-                                </p>
-                            </a>
-                        </li>
+
+                        <li class="nav-header">Tables</li>
+                        @foreach (var topic in topics)
+                        {
+                            <li class="nav-item">
+                                <a href="/Admin/@(topic + "/" + topic)List" class="nav-link @if (currentPath != null && currentPath.StartsWith($"/Admin/{topic}") )
+                                {
+                                        @:active
+                                }
+    ">
+                                    <i class="nav-icon fas fa-table"></i>
+                                    <p>
+                                        @topic
+                                    </p>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -114,16 +119,13 @@
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
+
     <!-- jQuery -->
-    <script src="/admin/assets/plugins/jquery.min.js"></script>
+    <script src="/admin/assets/dist/js/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
-    <script src="/admin/assets/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="/admin/assets/js/adminlte.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="/admin/assets/js/demo.js"></script>
+    <script src="/admin/assets/dist/js/bootstrap.bundle.min.js"></script>
+ 
+    <script src="/admin/assets/dist/js/adminlte.min.js"></script>
+    <script src="/admin/assets/dist/js/demo.js"></script>
 </body>
 </html>
-
-
-@RenderBody()

@@ -2,7 +2,7 @@
 
 namespace Domain.Persistance.Entities.Entities
 {
-    public class HomeSlide : ImgEntity
+    public class HomeSlide : Entity
     {
         public string? Title { get; set; }
         public string? Description { get; set; }

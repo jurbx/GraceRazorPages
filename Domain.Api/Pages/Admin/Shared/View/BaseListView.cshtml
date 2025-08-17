@@ -1,11 +1,12 @@
-﻿@model (IEnumerable<object> Items, IEnumerable<string> IncludedProperties)
-
-@{
-    var items = Model.Items;
+﻿@{
     Layout = "~/Pages/Admin/Shared/AdminLayout.cshtml";
+    IgnoreBody();
 
-    var type = Model.Items.FirstOrDefault()?.GetType() ?? Model.Items.GetType().GetGenericArguments()[0];
-    var properties = type.GetProperties().Where(info => Model.IncludedProperties.Contains(info.Name));
+    var items = ViewData["Entities"] as IEnumerable<object>;
+    var includedProperties = ViewData["IncludedProperties"] as IEnumerable<string>;
+
+    var type = items.FirstOrDefault()?.GetType() ?? items.GetType().GetGenericArguments()[0];
+    var properties = type.GetProperties().Where(info => includedProperties.Contains(info.Name));
     var url = $"/Admin/{type.Name}";
 }
 
@@ -34,7 +35,7 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">@nameof(type)</h3>
+                <h3 class="card-title">@type.Name</h3>
 
                 <div class="card-tools">
                     <a class="btn btn-info btn-sm" href=@(url + "/Create" + type.Name)>
@@ -60,7 +61,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var entity in Model.Items)
+                        @foreach (var entity in items)
                         {
                             <tr>
                                 @foreach (var info in properties)

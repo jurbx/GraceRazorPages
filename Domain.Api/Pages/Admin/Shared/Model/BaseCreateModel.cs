@@ -1,6 +1,5 @@
 ﻿using Domain.Generics.Persistance;
 using Domain.Generics.Services;
-using Domain.Services.Contracts.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -10,7 +9,7 @@ namespace Domain.Api.Pages.Admin.Shared.Model
     {
         protected readonly IService<IEntity> service;
 
-        public required object _Entity = Activator.CreateInstance(typeof(IEntity));
+        public object _Entity = Activator.CreateInstance(typeof(IEntity));
         public IEnumerable<string> ExcludedProperties { get; set; } = new List<string>
         {
             nameof(Entity.Id),

@@ -1,7 +1,9 @@
 ﻿@page
 @model Domain.Api.Pages.Admin.HomeSlide.CreateHomeSlideModel
 @{
-    Layout = null;
-}
+    Layout = "Shared/View/BaseCreateView";
 
-<partial name="Shared/View/BaseCreateView" model="(Model._Entity, Model.ExcludedProperties)" />
+    ViewData["Entity"] = Model._Entity;
+    ViewData["ExcludedProperties"] = Model.ExcludedProperties;
+    ViewData["Images"] = Model.Images;
+}
