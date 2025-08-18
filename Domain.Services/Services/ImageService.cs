@@ -18,5 +18,10 @@ namespace Domain.Services.Services
         {
             return await imageRepository.GetByEntityId(entityId);
         }
+
+        public async Task DeleteByFilepathAsync(string filepath)
+        {
+            await imageRepository.DeleteByFilepathAsync(filepath);
+        }
     }
 }

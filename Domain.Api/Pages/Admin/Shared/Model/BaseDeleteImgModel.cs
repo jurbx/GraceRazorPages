@@ -32,6 +32,7 @@ namespace Domain.Api.Pages.Admin.Shared.Model
                 foreach (var image in images)
                 {
                     await s3BucketService.DeleteFileAsync(image.ImagePath);
+                    await imageService.DeleteAsync(image.Id);
                 }
                 await service.DeleteAsync(id);
             }
