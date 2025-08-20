@@ -5,7 +5,7 @@
     var items = ViewData["Entities"] as IEnumerable<object>;
     var includedProperties = ViewData["IncludedProperties"] as IEnumerable<string>;
 
-    var type = items.FirstOrDefault()?.GetType() ?? items.GetType().GetGenericArguments()[0];
+    var type = items.FirstOrDefault()?.GetType()?.BaseType ?? items.GetType().GetGenericArguments()[0]?.BaseType;
     var properties = type.GetProperties().Where(info => includedProperties.Contains(info.Name));
     var url = $"/Admin/{type.Name}";
 }
@@ -68,7 +68,7 @@
                                 {
                                     <td>
                                         <a>
-                                            @info.GetValue(entity)
+                                            @info.GetValue(entity)?.ToString()
                                         </a>
                                         <br />
                                     </td>

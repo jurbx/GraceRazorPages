@@ -12,7 +12,8 @@ namespace Domain.Services
             services.AddScoped<IHomeSlideService, HomeSlideService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IImageService, ImageService>();
-
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IColorService, ColorService>();
 
             services.AddScoped<IS3BucketService, S3BucketService>();
 

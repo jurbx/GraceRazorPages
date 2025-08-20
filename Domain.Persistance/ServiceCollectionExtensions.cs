@@ -12,6 +12,8 @@ namespace Domain.Persistance
             services.AddScoped<IHomeSlideRepository, HomeSlideRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IColorRepository, ColorRepository>();
 
             return services;
         }

@@ -1,0 +1,10 @@
+﻿@page
+@model Domain.Api.Pages.Admin.Product.CreateProductModel
+@{
+    Layout = "Shared/View/BaseCreateImgView";
+
+    ViewData["Entity"] = Model._Entity;
+    ViewData["ExcludedProperties"] = Model.ExcludedProperties;
+    ViewData["Images"] = Model.Images;
+    ViewData[nameof(Persistance.Entities.Entities.Category)] = Model.Categories;
+}
