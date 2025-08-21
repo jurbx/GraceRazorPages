@@ -12,7 +12,7 @@
             {
                 var value = prop.GetValue(this);
 
-                if (prop.PropertyType == typeof(string))
+                if (prop.PropertyType == typeof(string) || prop.PropertyType.GetInterface("ICollection") != null || prop.Name == "LazyLoader")
                     continue;
 
                 if (value != null && !Equals(value, Activator.CreateInstance(prop.PropertyType)))

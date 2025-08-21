@@ -10,7 +10,7 @@
     var excludedProperties = ViewData["ExcludedProperties"] as IEnumerable<string>;
     var images = ViewData["Images"] as IEnumerable<Image>;
 
-    var type = item.GetType();
+    var type = item.GetType().BaseType;
     var properties = type.GetProperties().Where(p => !excludedProperties.Contains(p.Name));
 }
 
@@ -53,23 +53,50 @@
                                 var actualType = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
                                 var propValue = prop.GetValue(item);
 
-                                @if (actualType.IsEnum)
+                                @if (actualType == typeof(Guid))
+                                {
+                                    continue;
+                                }
+                                else if (actualType.IsEnum)
                                 {
                                     var enumValues = Enum.GetValues(actualType);
 
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="selectEnum">@prop.Name</label>
-                                            <select name="@prop.Name" class="custom-select rounded-0" id="selectEnum">
-                                                @foreach (var ev in enumValues)
+                                            <select name="@(prop.Name)" class="custom-select rounded-0" id="selectEnum">
+                                                @foreach (var value in enumValues)
                                                 {
-                                                    @if (propValue?.ToString() == ev.ToString())
+                                                    @if (propValue?.ToString() == value.ToString())
                                                     {
-                                                        <option selected="selected" value="@((int)ev)">@ev.ToString()</option>
+                                                        <option selected="selected" value="@((int)value)">@value.ToString()</option>
                                                     }
                                                     else
                                                     {
-                                                        <option value="@((int)ev)">@ev.ToString()</option>
+                                                        <option value="@((int)value)">@value.ToString()</option>
+                                                    }
+
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                }
+                                else if (actualType.IsAssignableTo(typeof(Entity)))
+                                {
+                                    IEnumerable<Entity> values = ViewData[actualType.Name] as IEnumerable<Entity>;
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="select">@prop.Name</label>
+                                            <select name="@(prop.Name)Id" class="custom-select rounded-0" id="select">
+                                                @foreach (var value in values)
+                                                {
+                                                    @if (propValue != null && ((Entity)propValue).Id == value.Id)
+                                                    {
+                                                        <option selected="selected" value="@(value.Id)">@value.ToString()</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@(value.Id)">@value.ToString()</option>
                                                     }
 
                                                 }

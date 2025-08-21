@@ -1,0 +1,7 @@
+﻿@page
+@model Domain.Api.Pages.Admin.Product.ProductListModel
+@{
+    Layout = "Shared/View/BaseListView";
+    ViewData["Entities"] = Model.Entities;
+    ViewData["IncludedProperties"] = Model.IncludedProperties;
+}

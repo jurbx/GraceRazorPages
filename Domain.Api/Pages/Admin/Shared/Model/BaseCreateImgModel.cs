@@ -33,7 +33,7 @@ namespace Domain.Api.Pages.Admin.Shared.Model
             this.imageService = imageService;
         }
 
-        public async Task OnGetAsync(Guid? id)
+        public virtual async Task OnGetAsync(Guid? id)
         {
             if (id != null)
             {
@@ -42,7 +42,7 @@ namespace Domain.Api.Pages.Admin.Shared.Model
             }
         }
 
-        public async Task<IActionResult> OnPostAsync(IEntity entity)
+        public virtual async Task<IActionResult> OnPostAsync(IEntity entity)
         {
 
             var dbEntity = await service.GetByIdAsync(entity.Id);
@@ -62,7 +62,7 @@ namespace Domain.Api.Pages.Admin.Shared.Model
             return Redirect($"/Admin/{entity.GetType().Name}/{entity.GetType().Name}List");
         }
 
-        private async Task SaveImages(Guid? entityId)
+        protected async Task SaveImages(Guid? entityId)
         {
             var files = Request.Form.Files;
             var images = await imageService.GetByEntityIdAsync(entityId);

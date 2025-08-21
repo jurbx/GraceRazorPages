@@ -19,18 +19,22 @@ namespace Domain.Persistance
         public DbSet<HomeSlide> HomeSlides { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Color> Colors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new ImageConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new ColorConfiguration());
 
             CreateDefaultUser(modelBuilder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(Config.GetConnectionString("DatabaseConntection"));
+            optionsBuilder.UseLazyLoadingProxies();
         }
 
         private void CreateDefaultUser(ModelBuilder modelBuilder)
