@@ -35,6 +35,7 @@ namespace Domain.Persistance
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
+            optionsBuilder.UseNpgsql(Config.GetConnectionString("DatabaseConntection"));
         }
 
         private void CreateDefaultUser(ModelBuilder modelBuilder)
